@@ -1,0 +1,89 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ model_fqn }} as {{ model_alias }};
+use Illuminate\Database\Eloquent\Model;
+use Syndicate\Promoter\Contracts\SeoConfig;
+use Syndicate\Promoter\Services\NewSeoService as SeoService;
+use Syndicate\Promoter\Enums\RobotsDirective;
+use Syndicate\Promoter\Services\Types\Hreflang;
+use Astrotomic\OpenGraph\Type;
+use Astrotomic\OpenGraph\TwitterType;
+use Spatie\SchemaOrg\Graph;
+
+class {{ class }} implements SeoConfig
+{
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function title(Model $record, SeoService $service): ?string
+    {
+        return $record->seoData?->title ?? $record->title;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function description(Model $record, SeoService $service): ?string
+    {
+        return $record->seoData?->description;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function robots(Model $record, SeoService $service): ?string
+    {
+        return $record->seoData?->robots ?? RobotsDirective::INDEX_FOLLOW;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function keywords(Model $record, SeoService $service): ?string
+    {
+        return $record->seoData?->keywords;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function canonicalUrl(Model $record, SeoService $service): ?string
+    {
+        return $record->seoData?->canonicalUrl ?? $record->link();
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function hreflang(Model $record, SeoService $service): ?Hreflang
+    {
+        return null;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function openGraph(Model $record, SeoService $service): ?Type
+    {
+        return null;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function twitter(Model $record, SeoService $service): ?TwitterType
+    {
+        return null;
+    }
+
+    /**
+     * @param  {{ model_alias }}  $record
+     */
+    public function schema(Model $record, SeoService $service): ?Graph
+    {
+        return null;
+    }
+}
+

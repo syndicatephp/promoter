@@ -4,22 +4,16 @@ namespace Syndicate\Promoter;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Syndicate\Promoter\Commands\PromoterCommand;
+use Syndicate\Promoter\Commands\MakeSeoConfig;
 
 class PromoterServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
-            ->name('promoter')
-            ->hasConfigFile()
+            ->name('syndicate-promoter')
             ->hasViews()
-            ->hasMigration('create_promoter_table')
-            ->hasCommand(PromoterCommand::class);
+            ->hasMigration('create_seo_data_table')
+            ->hasCommand(MakeSeoConfig::class);
     }
 }

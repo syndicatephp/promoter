@@ -66,10 +66,7 @@
         "laravel": {
             "providers": [
                 "Syndicate\\Promoter\\PromoterServiceProvider"
-            ],
-            "aliases": {
-                "Promoter": "Syndicate\\Promoter\\Facades\\Promoter"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
