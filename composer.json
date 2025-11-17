@@ -1,24 +1,27 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "syndicatephp/promoter",
+    "description": "Seo and Sitemaps for Laravel+Filament.",
     "keywords": [
-        ":vendor_name",
+        "Syndicate",
         "laravel",
-        ":package_slug"
+        "promoter"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/syndicatephp/promoter",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "vvb13a",
+            "email": "vvb@wiot-tomorrow.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.4",
+        "astrotomic/php-open-graph": "^1.0",
+        "filament/filament": "^3",
+        "illuminate/contracts": "^11.0||^12.0",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "spatie/schema-org": "^3.23"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
@@ -30,18 +33,17 @@
         "pestphp/pest-plugin-laravel": "^4.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpstan/phpstan-phpunit": "^2.0",
-        "spatie/laravel-ray": "^1.35"
+        "phpstan/phpstan-phpunit": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Syndicate\\Promoter\\": "src/",
+            "Syndicate\\Promoter\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Syndicate\\Promoter\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,10 +65,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Syndicate\\Promoter\\PromoterServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Promoter": "Syndicate\\Promoter\\Facades\\Promoter"
             }
         }
     },
