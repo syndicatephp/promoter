@@ -63,7 +63,7 @@ class SeoService implements Htmlable
         $seoNamespaceParts = array_merge($rootParts, ['Syndicate', 'Promoter', 'Seo']);
         $seoNamespace = implode('\\', $seoNamespaceParts);
 
-        return $seoNamespace.'\\'.$shortName.'SeoConfig';
+        return $seoNamespace . '\\' . $shortName . 'SeoConfig';
     }
 
     public static function make(Model $record): self
@@ -78,7 +78,7 @@ class SeoService implements Htmlable
 
     public function render(): View
     {
-        return view('syndicate-promoter::seo', [
+        return view('promoter::seo', [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
             'canonicalUrl' => $this->getCanonicalUrl(),

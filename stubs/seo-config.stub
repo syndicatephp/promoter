@@ -5,9 +5,9 @@ namespace {{ namespace }};
 use {{ model_fqn }} as {{ model_alias }};
 use Illuminate\Database\Eloquent\Model;
 use Syndicate\Promoter\Contracts\SeoConfig;
-use Syndicate\Promoter\Services\NewSeoService as SeoService;
+use Syndicate\Promoter\Services\SeoService;
 use Syndicate\Promoter\Enums\RobotsDirective;
-use Syndicate\Promoter\Services\Types\Hreflang;
+use Syndicate\Promoter\Support\Hreflang;
 use Astrotomic\OpenGraph\Type;
 use Astrotomic\OpenGraph\TwitterType;
 use Spatie\SchemaOrg\Graph;
@@ -35,7 +35,7 @@ class {{ class }} implements SeoConfig
      */
     public function robots(Model $record, SeoService $service): ?string
     {
-        return $record->seoData?->robots ?? RobotsDirective::INDEX_FOLLOW;
+        return $record->seoData?->robots ?? RobotsDirective::INDEX_FOLLOW->value;
     }
 
     /**

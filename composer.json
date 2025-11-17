@@ -20,6 +20,7 @@
         "astrotomic/php-open-graph": "^1.0",
         "filament/filament": "^3",
         "illuminate/contracts": "^11.0||^12.0",
+        "laravel/prompts": "^0.3.7",
         "spatie/laravel-package-tools": "^1.16",
         "spatie/schema-org": "^3.23"
     },

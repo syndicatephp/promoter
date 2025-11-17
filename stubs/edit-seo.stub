@@ -1,0 +1,11 @@
+<?php
+
+namespace {{ namespace }};
+
+use Syndicate\Promoter\Filament\Pages\EditSeo;
+
+class {{ class }} extends EditSeo
+{
+    protected static string $resource = {{$resource}}::class;
+}
+
