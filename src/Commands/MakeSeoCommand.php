@@ -41,7 +41,7 @@ class MakeSeoCommand extends Command
         }
 
         $seoName = class_basename($model) . 'Seo';
-        $targetDir = app_path('Syndicate/Promoter/Seo');
+        $targetDir = app_path('Syndicate/Promoter/Seos');
 
         if (!$this->files->isDirectory($targetDir)) {
             $this->files->makeDirectory($targetDir, 0755, true);
