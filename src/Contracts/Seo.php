@@ -9,7 +9,7 @@ use Spatie\SchemaOrg\Graph;
 use Syndicate\Promoter\Services\SeoService;
 use Syndicate\Promoter\Support\Hreflang;
 
-interface SeoConfig
+interface Seo
 {
     public function title(Model $record, SeoService $service): ?string;
 

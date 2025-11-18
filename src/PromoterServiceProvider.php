@@ -4,7 +4,7 @@ namespace Syndicate\Promoter;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Syndicate\Promoter\Commands\MakeSeo;
+use Syndicate\Promoter\Commands\MakeSeoCommand;
 
 class PromoterServiceProvider extends PackageServiceProvider
 {
@@ -14,6 +14,6 @@ class PromoterServiceProvider extends PackageServiceProvider
             ->name('promoter')
             ->hasViews()
             ->hasMigration('create_seo_data_table')
-            ->hasCommand(MakeSeo::class);
+            ->hasCommand(MakeSeoCommand::class);
     }
 }

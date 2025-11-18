@@ -10,19 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
 use RuntimeException;
 use Spatie\SchemaOrg\Graph;
-use Syndicate\Promoter\Contracts\SeoConfig;
+use Syndicate\Promoter\Contracts\Seo;
 use Syndicate\Promoter\Support\Hreflang;
 
 class SeoService implements Htmlable
 {
-    protected SeoConfig $seoConfig;
+    protected Seo $seoConfig;
 
     public function __construct(protected Model $record)
     {
         $this->seoConfig = $this->resolveSeoConfig();
     }
 
-    protected function resolveSeoConfig(): SeoConfig
+    protected function resolveSeoConfig(): Seo
     {
         $model = $this->record;
         $modelClass = get_class($model);
@@ -42,7 +42,7 @@ class SeoService implements Htmlable
         }
 
         throw new RuntimeException(
-            sprintf('Unable to resolve SeoConfig for model [%s]', $modelClass)
+            sprintf('Unable to resolve Seo for model [%s]', $modelClass)
         );
     }
 
@@ -63,7 +63,7 @@ class SeoService implements Htmlable
         $seoNamespaceParts = array_merge($rootParts, ['Syndicate', 'Promoter', 'Seo']);
         $seoNamespace = implode('\\', $seoNamespaceParts);
 
-        return $seoNamespace . '\\' . $shortName . 'SeoConfig';
+        return $seoNamespace . '\\' . $shortName . 'Seo';
     }
 
     public static function make(Model $record): self

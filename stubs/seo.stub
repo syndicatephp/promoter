@@ -1,10 +1,10 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Syndicate\Promoter\Seo;
 
-use {{ model_fqn }} as {{ model_alias }};
+use {{ modelFqn }};
 use Illuminate\Database\Eloquent\Model;
-use Syndicate\Promoter\Contracts\SeoConfig;
+use Syndicate\Promoter\Contracts\Seo;
 use Syndicate\Promoter\Services\SeoService;
 use Syndicate\Promoter\Enums\RobotsDirective;
 use Syndicate\Promoter\Support\Hreflang;
@@ -12,10 +12,10 @@ use Astrotomic\OpenGraph\Type;
 use Astrotomic\OpenGraph\TwitterType;
 use Spatie\SchemaOrg\Graph;
 
-class {{ class }} implements SeoConfig
+class {{ seoName }} implements Seo
 {
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function title(Model $record, SeoService $service): ?string
     {
@@ -23,7 +23,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function description(Model $record, SeoService $service): ?string
     {
@@ -31,7 +31,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function robots(Model $record, SeoService $service): ?string
     {
@@ -39,7 +39,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function keywords(Model $record, SeoService $service): ?string
     {
@@ -47,7 +47,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function canonicalUrl(Model $record, SeoService $service): ?string
     {
@@ -55,7 +55,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function hreflang(Model $record, SeoService $service): ?Hreflang
     {
@@ -63,7 +63,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function openGraph(Model $record, SeoService $service): ?Type
     {
@@ -71,7 +71,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function twitter(Model $record, SeoService $service): ?TwitterType
     {
@@ -79,7 +79,7 @@ class {{ class }} implements SeoConfig
     }
 
     /**
-     * @param  {{ model_alias }}  $record
+     * @param  {{ modelName }}  $record
      */
     public function schema(Model $record, SeoService $service): ?Graph
     {
