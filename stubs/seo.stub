@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Syndicate\Promoter\Seos;
+namespace App\Syndicate\Promoter\Seo;
 
 use {{ modelFqn }};
 use Illuminate\Database\Eloquent\Model;

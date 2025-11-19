@@ -7,7 +7,6 @@ use Astrotomic\OpenGraph\Type;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use ReflectionClass;
 use RuntimeException;
 use Spatie\SchemaOrg\Graph;
 use Syndicate\Promoter\Contracts\Seo;
@@ -15,11 +14,12 @@ use Syndicate\Promoter\Support\Hreflang;
 
 class SeoService implements Htmlable
 {
-    protected Seo $seoConfig;
+    protected static array $guessCache = [];
+    protected Seo $seo;
 
     public function __construct(protected Model $record)
     {
-        $this->seoConfig = $this->resolveSeoConfig();
+        $this->seo = $this->resolveSeoConfig();
     }
 
     protected function resolveSeoConfig(): Seo
@@ -27,17 +27,21 @@ class SeoService implements Htmlable
         $model = $this->record;
         $modelClass = get_class($model);
 
-        if (property_exists($modelClass, 'seoConfigClass') && $modelClass::$seoConfigClass) {
-            $fallbackClass = $modelClass::$seoConfigClass;
-
-            if (is_string($fallbackClass) && class_exists($fallbackClass)) {
-                return app($fallbackClass);
-            }
+        // 1. Check for explicit property on Model
+        if (property_exists($modelClass, 'seoDefinition')) {
+            return app($modelClass::$seoDefinition);
         }
 
-        $configClass = $this->guessConfigFromConvention($modelClass);
+        // 2. Check Memory Cache (Memoization)
+        if (isset(static::$guessCache[$modelClass])) {
+            return app(static::$guessCache[$modelClass]);
+        }
 
-        if ($configClass && class_exists($configClass)) {
+        // 3. Run the Guesser
+        $configClass = $this->guessClassName($modelClass);
+
+        if (class_exists($configClass)) {
+            static::$guessCache[$modelClass] = $configClass;
             return app($configClass);
         }
 
@@ -46,24 +50,9 @@ class SeoService implements Htmlable
         );
     }
 
-    protected function guessConfigFromConvention(string $modelClass): ?string
+    protected function guessClassName(string $modelClass): string
     {
-        $reflection = new ReflectionClass($modelClass);
-        $shortName = $reflection->getShortName();
-        $modelNamespace = $reflection->getNamespaceName();
-        $namespaceParts = explode('\\', $modelNamespace);
-        $modelsIndex = array_search('Models', $namespaceParts, true);
-
-        if ($modelsIndex === false) {
-            return null;
-        }
-
-        $rootParts = array_slice($namespaceParts, 0, $modelsIndex);
-
-        $seoNamespaceParts = array_merge($rootParts, ['Syndicate', 'Promoter', 'Seo']);
-        $seoNamespace = implode('\\', $seoNamespaceParts);
-
-        return $seoNamespace . '\\' . $shortName . 'Seo';
+        return 'App\\Syndicate\\Promoter\\Seo\\' . class_basename($modelClass) . 'Seo';
     }
 
     public static function make(Model $record): self
@@ -93,7 +82,7 @@ class SeoService implements Htmlable
 
     public function getTitle(): ?string
     {
-        return $this->sanitizeString($this->seoConfig->title($this->record, $this));
+        return $this->sanitizeString($this->seo->title($this->record, $this));
     }
 
     protected function sanitizeString(?string $value): ?string
@@ -108,41 +97,41 @@ class SeoService implements Htmlable
 
     public function getDescription(): ?string
     {
-        return $this->sanitizeString($this->seoConfig->description($this->record, $this));
+        return $this->sanitizeString($this->seo->description($this->record, $this));
     }
 
     public function getCanonicalUrl(): ?string
     {
-        return $this->sanitizeString($this->seoConfig->canonicalUrl($this->record, $this));
+        return $this->sanitizeString($this->seo->canonicalUrl($this->record, $this));
     }
 
     public function getRobots(): ?string
     {
-        return $this->sanitizeString($this->seoConfig->robots($this->record, $this));
+        return $this->sanitizeString($this->seo->robots($this->record, $this));
     }
 
     public function getTwitter(): ?TwitterType
     {
-        return $this->seoConfig->twitter($this->record, $this);
+        return $this->seo->twitter($this->record, $this);
     }
 
     public function getOpenGraph(): ?Type
     {
-        return $this->seoConfig->openGraph($this->record, $this);
+        return $this->seo->openGraph($this->record, $this);
     }
 
     public function getSchema(): Graph|null
     {
-        return $this->seoConfig->schema($this->record, $this);
+        return $this->seo->schema($this->record, $this);
     }
 
     public function getHreflang(): ?Hreflang
     {
-        return $this->seoConfig->hreflang($this->record, $this);
+        return $this->seo->hreflang($this->record, $this);
     }
 
     public function getKeywords(): ?string
     {
-        return $this->sanitizeString($this->sanitizeString($this->seoConfig->keywords($this->record, $this)));
+        return $this->sanitizeString($this->sanitizeString($this->seo->keywords($this->record, $this)));
     }
 }

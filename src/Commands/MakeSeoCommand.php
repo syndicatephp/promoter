@@ -41,7 +41,7 @@ class MakeSeoCommand extends Command
         }
 
         $seoName = class_basename($model) . 'Seo';
-        $targetDir = app_path('Syndicate/Promoter/Seos');
+        $targetDir = app_path('Syndicate/Promoter/Seo');
 
         if (!$this->files->isDirectory($targetDir)) {
             $this->files->makeDirectory($targetDir, 0755, true);
@@ -88,7 +88,7 @@ class MakeSeoCommand extends Command
 
     protected function stubPath(): string
     {
-        $published = base_path('stubs/promoter/seo.stub');
+        $published = base_path('stubs/syndicate/promoter/seo.stub');
 
         if (file_exists($published)) {
             return $published;
